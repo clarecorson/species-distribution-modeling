@@ -61,10 +61,33 @@ fData <- d |>
 fData <- fData |>
   filter(countryCode %in% c("US", "CA", "MX"))
 
+#another way to write this
+# fData <- fData |> 
+#   filter(countryCode == "US" | countryCode == "CA" | countryCode == "MX")
+
 fData <- fData |>
   filter(!basisOfRecord %in% c("FOSSIL_SPECIMEN", "LIVING_SPECIMEN"))
 
+# remove specimens that are in the sea
 fData <- fData |>
   cc_sea(lon = "decimalLongitude", lat = "decimalLatitude")
 
+# remove duplicates
+fData <- fData |>
+  distinct(decimalLongitude, decimalLatitude, speciesKey, datasetKey, .keep_all = TRUE)
 
+# one fell swoop:
+# cleanData <- d |>
+#   filter(!is.na(decimalLatitude), !is.na(decimalLongitude)) |>
+#   filter(countryCode %in% c("US", "CA", "MX")) |>
+#   filter(!basisOfRecord %in% c("FOSSIL_SPECIMEN", "LIVING_SPECIMEN")) |>
+#   cc_sea(lon = "decimalLongitude", lat = "decimalLatitude") |>
+#   distinct(decimalLongitude, decimalLatitude, speciesKey, datasetKey, .keep_all = TRUE)
+
+  
+  
+  
+  
+  
+  
+  
