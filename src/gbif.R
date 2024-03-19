@@ -4,19 +4,6 @@
 # save it to a csv file
 # create a map to display the species occurrence points
 
-# list of packages to install
-packages <- c("tidyverse", "rgbif", "usethis", "CoordinateCleaner", "leaflet",
-              "mapview")
-
-# install packages not yet installed
-installed_packages <- packages %in% rownames(installed.packages())
-if(any(installed_packages==FALSE)){
-  install.packages(packages[!installed_packages])
-}
-
-# packages loading with library function
-invisible(lapply(packages, library, character.only=TRUE))
-
 usethis::edit_r_environ()
 
 
@@ -74,7 +61,11 @@ fData <- fData |>
 
 # remove duplicates
 fData <- fData |>
-  distinct(decimalLongitude, decimalLatitude, speciesKey, datasetKey, .keep_all = TRUE)
+  distinct(decimalLongitude, 
+           decimalLatitude, 
+           speciesKey, 
+           datasetKey, 
+           .keep_all = TRUE)
 
 # one fell swoop:
 # cleanData <- d |>
@@ -83,6 +74,11 @@ fData <- fData |>
 #   filter(!basisOfRecord %in% c("FOSSIL_SPECIMEN", "LIVING_SPECIMEN")) |>
 #   cc_sea(lon = "decimalLongitude", lat = "decimalLatitude") |>
 #   distinct(decimalLongitude, decimalLatitude, speciesKey, datasetKey, .keep_all = TRUE)
+
+
+write.csv(fData, "data/cleanedData.csv")
+
+
 
   
   
